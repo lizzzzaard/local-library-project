@@ -8,11 +8,8 @@ function getTotalAccountsCount(accounts) {
 
 function getBooksBorrowedCount(books) {
 
-  // returns a number so we want to start with a total to start the count
-  let totalBooks = 0
-
   // loop through the book objects to look at the borrows array within the book object
-  books.forEach ((bookObj) => {
+  let total = books.reduce((acc, bookObj) => {
     const {borrows} = bookObj;
 
     // within the borrows array, we need to check if the book is currently checked out. we can use some since we need only one value of false to know that it is checked out
@@ -22,10 +19,11 @@ function getBooksBorrowedCount(books) {
 
     // then we want to add it to the count if the book has been checked out
     if (isABookCheckedOut === true){
-    totalBooks ++
+      acc ++
     }
-  })
-  return totalBooks;
+    return acc;
+  }, 0)
+  return total;
 }
 
 function getMostCommonGenres(books) {
